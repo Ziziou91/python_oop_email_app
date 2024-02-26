@@ -4,8 +4,17 @@ class Email():
         self.subject_line = subject_line
         self.email_content = email_content
 
-test = Email("test@test.com", "Hello there!", "Hi there, here is the content of my test email.")
+    has_been_read = False
 
-print("email address: ", test.email_address)
-print("subject line: ", test.subject_line)
-print("email content: ", test.email_content)
+    def mark_as_read(self):
+        self.has_been_read = True
+
+inbox = []
+
+def populate_inbox():
+    """creates an email object with email address, subject line, and contents, and stores it in inbox."""
+    pass
+
+def list_emails():
+    """loops through inbox and prints each email’s subject_line, along with a corresponding number."""
+    pass
