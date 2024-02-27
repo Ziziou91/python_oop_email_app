@@ -15,7 +15,7 @@ class Email():
 
 inbox = []
 
-def populate_inbox():
+def populate_inbox() -> None:
     """creates an email object with email address, subject line, and contents, and stores it in inbox."""
     initial_emails_data = [
         ["hello@pythontips.com", "British or American english variable names?", "Hi there, one of the most common questions we get asked is best practice for variable spelling and grammar. Check out our website for our editors thoughts on the matter."],
@@ -24,11 +24,28 @@ def populate_inbox():
         ]
     inbox.extend([Email(*initial_email_data) for initial_email_data in initial_emails_data])
 
-def list_emails():
+def list_emails() -> None:
     """loops through inbox and prints each email’s subject_line, along with a corresponding number."""
     print("inbox")
     for index, email in enumerate(inbox):
         print(f"{index}\t{email.subject_line}")
+
+def read_email() -> None:
+    """Takes a user input (inbox index), then displays selected email and sets has_been_read to True."""
+    print(f"{'-'*30}{color.bold}Read email{color.end}{'-'*31}")
+    # Validate user input - ensure it can be cast as integer.
+    while True:
+        try:
+            selected_index = int(input("Please select which email you would like to read: "))
+        except ValueError:
+            print(f"{'-'*10}ERROR! Input must be integer. Please try again.")
+            continue
+        else:
+            break
+    print(f"From: {inbox[selected_index].email_address}")
+    print(f"Subject: {inbox[selected_index].subject_line}")
+    print(f"Content: {inbox[selected_index].email_content}")
+
 
 if __name__ == "__main__":
     print_line()
@@ -36,7 +53,16 @@ if __name__ == "__main__":
     print_line()
 
     populate_inbox()
-    list_emails()
+    print("""The following commands are available:
+          \t* list - list all emails in the inbox
+          \t* read - read an email in the inbox 
+          """)
+    menu_choice = input("Enter your input: ")
+    # TODO - make sure the user input is valid
+    if menu_choice == "list":
+        list_emails()
+    elif menu_choice == "read":
+        read_email()
 
     print_line()
     print(f"{'*'*29}{color.bold}email.py END{color.end}{'*'*29}")
