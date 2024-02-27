@@ -1,3 +1,5 @@
+from utility_functions import color, print_line
+
 class Email():
     """Class copies the basic functionality expected from an email."""
     def __init__(self, email_address: str, subject_line: str, email_content: str) -> None:
@@ -29,5 +31,13 @@ def list_emails():
         print(f"{index}\t{email.subject_line}")
 
 if __name__ == "__main__":
+    print_line()
+    print(f"{'*'*30}{color.bold}email.py{color.end}{'*'*31}")
+    print_line()
+
     populate_inbox()
     list_emails()
+
+    print_line()
+    print(f"{'*'*29}{color.bold}email.py END{color.end}{'*'*29}")
+    print_line()
