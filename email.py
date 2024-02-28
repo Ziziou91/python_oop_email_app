@@ -22,6 +22,7 @@ class Email():
 
 inbox = []
 
+# ==============Functions==============
 def populate_inbox() -> None:
     """creates an email object with email address, subject line, and contents, and stores it in inbox."""
     initial_emails_data = [
@@ -39,6 +40,7 @@ def list_emails() -> None:
         print(create_table_line(index, email.subject_line))
         print(create_char_line())
 
+
 def read_email() -> None:
     """Takes a user input (inbox index), then displays selected email and sets has_been_read to True."""
     print(f"{'-'*30}{color.bold}Read email{color.end}{'-'*31}")
@@ -55,21 +57,32 @@ def read_email() -> None:
     print(f"Subject: {inbox[selected_index].subject_line}")
     print(f"Content: {inbox[selected_index].email_content}")
 
-def validate_menu_choice(user_str: str) -> list:
-    # TODO - 2) make sure the user input is valid, can be split, first part is a command , second is integer and corresponds to index in inbox.
 
-    #Check user_str can be split into a list of length 2.
+def validate_menu_choice(user_str: str) -> list:
+    """Make sure the user input is valid. So:
+    1) Can be split into a list with length of 2
+    2) First part of input is in 'valid_inputs'
+    3) Second part of input corresponds to index of value in 'inbox' 
+    """
+    valid_inputs = ["read", "spam", "del"]
+    inbox_indexes = [i for i, _ in enumerate(inbox)]
     user_list = user_str.split(" ")
     while True:
-        if len(user_list) == 2:
-            break
-        else: 
-            print(f"\n{'-'*10}ERROR! {user_str} is not a valid input. Please try again.\n")
-            user_str = input("Enter your input: ")
-            user_list = user_str.split(" ")
-    return user_list 
+        if user_list[1].isdigit():
+            user_list[1] = int(user_list[1])
+            if len(user_list) == 2 and user_list[0] in valid_inputs and user_list[1] in inbox_indexes:
+                break
 
-if __name__ == "__main__":
+        # Print error message and ask user for new input if previous is not valid.
+        print(f"\n{'-'*10}ERROR! {user_str} is not a valid input. Please try again.\n")
+        user_str = input("Enter your input: ")
+        user_list = user_str.split(" ")
+
+    return user_list
+
+
+# ==============main() function==============
+def main() -> None:
     print(create_char_line())
     print(f"{'*'*36}{color.bold}email.py{color.end}{'*'*35}")
     print(create_char_line())
@@ -78,15 +91,28 @@ if __name__ == "__main__":
     list_emails()
 
     print("""\nThe following commands are available:
-          \t* read x - read an email in the inbox 
-          \t* spam x - mark an email as spam
-          \t* del x - delete an email
-          where 'x' is the email number printed above. 
+\t* read x - read an email in the inbox 
+\t* spam x - mark an email as spam
+\t* del x - delete an email
+where 'x' is the email number in the table above. 
           """)
     menu_choice = input("Enter your input: ")
-    validated_menu_choice = validate_menu_choice(menu_choice)
-    print(f"{validated_menu_choice} is a valid input! Great work!")
+    command, email = validate_menu_choice(menu_choice)
+    print(f"{command} {email} is a valid input! Great work!")
+    if command == "read":
+        inbox[email].read_email()
+    elif command == "spam":
+        print("call spam method")
+    elif command == "del":
+        print("call delete method")
+
+
 
     print(create_char_line())
-    print(f"{'*'*29}{color.bold}email.py END{color.end}{'*'*29}")
+    print(f"{'*'*33}{color.bold}email.py END{color.end}{'*'*34}")
     print(create_char_line())
+
+
+# ==============EXECUTION STARTS HERE==============
+if __name__ == "__main__":
+    main()
