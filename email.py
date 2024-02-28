@@ -1,4 +1,4 @@
-from utility_functions import color, print_line
+from utility_functions import color, create_char_line, create_table_line, create_title
 
 class Email():
     """Class copies the basic functionality expected from an email."""
@@ -11,6 +11,13 @@ class Email():
 
     def mark_as_read(self):
         """Sets has_been_read to True when called."""
+        self.has_been_read = True
+
+    def read_email(self):
+        """Prints emails details in terminal and sets has_been_read to True."""
+        print(f"From: {self.email_address}")
+        print(f"Subject: {self.subject_line}")
+        print(f"Content: {self.email_content}")
         self.has_been_read = True
 
 inbox = []
@@ -26,9 +33,11 @@ def populate_inbox() -> None:
 
 def list_emails() -> None:
     """loops through inbox and prints each email’s subject_line, along with a corresponding number."""
-    print("inbox")
+    print(create_title("inbox"))
+    print(f"{create_char_line()}\n{create_table_line()}\n{create_char_line()}")
     for index, email in enumerate(inbox):
-        print(f"{index}\t{email.subject_line}")
+        print(create_table_line(index, email.subject_line))
+        print(create_char_line())
 
 def read_email() -> None:
     """Takes a user input (inbox index), then displays selected email and sets has_been_read to True."""
@@ -46,24 +55,38 @@ def read_email() -> None:
     print(f"Subject: {inbox[selected_index].subject_line}")
     print(f"Content: {inbox[selected_index].email_content}")
 
+def validate_menu_choice(user_str: str) -> list:
+    # TODO - 2) make sure the user input is valid, can be split, first part is a command , second is integer and corresponds to index in inbox.
+
+    #Check user_str can be split into a list of length 2.
+    user_list = user_str.split(" ")
+    while True:
+        if len(user_list) == 2:
+            break
+        else: 
+            print(f"\n{'-'*10}ERROR! {user_str} is not a valid input. Please try again.\n")
+            user_str = input("Enter your input: ")
+            user_list = user_str.split(" ")
+    return user_list 
 
 if __name__ == "__main__":
-    print_line()
-    print(f"{'*'*30}{color.bold}email.py{color.end}{'*'*31}")
-    print_line()
+    print(create_char_line())
+    print(f"{'*'*36}{color.bold}email.py{color.end}{'*'*35}")
+    print(create_char_line())
 
     populate_inbox()
-    print("""The following commands are available:
-          \t* list - list all emails in the inbox
-          \t* read - read an email in the inbox 
+    list_emails()
+
+    print("""\nThe following commands are available:
+          \t* read x - read an email in the inbox 
+          \t* spam x - mark an email as spam
+          \t* del x - delete an email
+          where 'x' is the email number printed above. 
           """)
     menu_choice = input("Enter your input: ")
-    # TODO - make sure the user input is valid
-    if menu_choice == "list":
-        list_emails()
-    elif menu_choice == "read":
-        read_email()
+    validated_menu_choice = validate_menu_choice(menu_choice)
+    print(f"{validated_menu_choice} is a valid input! Great work!")
 
-    print_line()
+    print(create_char_line())
     print(f"{'*'*29}{color.bold}email.py END{color.end}{'*'*29}")
-    print_line()
+    print(create_char_line())
