@@ -32,6 +32,7 @@ def populate_inbox() -> None:
         ]
     inbox.extend([Email(*initial_email_data) for initial_email_data in initial_emails_data])
 
+
 def list_emails() -> None:
     """loops through inbox and prints each email’s subject_line, along with a corresponding number."""
     print(create_title("inbox"))
