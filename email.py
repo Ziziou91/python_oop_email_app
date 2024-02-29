@@ -42,23 +42,6 @@ def list_emails() -> None:
         print(create_char_line())
 
 
-def read_email() -> None:
-    """Takes a user input (inbox index), then displays selected email and sets has_been_read to True."""
-    print(f"{'-'*30}{color.bold}Read email{color.end}{'-'*31}")
-    # Validate user input - ensure it can be cast as integer.
-    while True:
-        try:
-            selected_index = int(input("Please select which email you would like to read: "))
-        except ValueError:
-            print(f"{'-'*10}ERROR! Input must be integer. Please try again.")
-            continue
-        else:
-            break
-    print(f"From: {inbox[selected_index].email_address}")
-    print(f"Subject: {inbox[selected_index].subject_line}")
-    print(f"Content: {inbox[selected_index].email_content}")
-
-
 def validate_menu_choice(user_str: str) -> list:
     """Make sure the user input is valid. So:
     1) Can be split into a list with length of 2
@@ -84,6 +67,7 @@ def validate_menu_choice(user_str: str) -> list:
 
 # ==============main() function==============
 def main() -> None:
+    """populates inbox with sample emails and prints before asking for user input."""
     print(create_char_line())
     print(f"{'*'*36}{color.bold}email.py{color.end}{'*'*35}")
     print(create_char_line())
