@@ -38,4 +38,4 @@ def create_title(title_str:str, line_width:int=79) -> str:
     if len(title_str) % 2:
         return f"{" "*outside_space}{'-'*24}\n{" "*outside_space}|{' '*internal_space}{title_str}{' '*(internal_space+1)}|\n{" "*outside_space}{'-'*24}"
     else:
-        return f"{'-'*24}\n|{' '*internal_space}{title_str}{' '*(internal_space)}|\n{'-'*24}"
+        return f"{" "*outside_space}{'-'*24}\n{" "*outside_space}|{' '*internal_space}{title_str}{' '*(internal_space)}|\n{" "*outside_space}{'-'*24}"
