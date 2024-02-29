@@ -1,5 +1,5 @@
 import sys
-from utility_functions import color, create_char_line, create_table_line, create_title
+from utility_functions import color, create_char_line, create_table_row, create_title
 
 class Email():
     """Class copies the basic functionality expected from an email."""
@@ -17,12 +17,26 @@ class Email():
 
     def read_email(self):
         """Prints emails details in terminal and sets has_been_read to True."""
-        print(f"From: {self.email_address}")
-        print(f"Subject: {self.subject_line}")
-        print(f"Content: {self.email_content}")
+        print(create_char_line())
+        print(create_table_row("From:", self.email_address))
+        print(create_char_line())
+        print(create_table_row("Subject:", self.subject_line))
+        print(create_char_line())
+        print(create_table_row("Content:", self.email_content))
+        print(create_char_line())
+
         self.has_been_read = True
 
 inbox = []
+help_string = """\nThe following commands are available:
+\t* read x - read an email in the inbox 
+\t* spam x - mark an email as spam
+\t* del x - delete an email
+\t* unread - view unread emails
+\t* help - shows this menu
+\t* quit - quit application
+where 'x' is the email number in the table above. 
+"""
 
 # ==============Functions==============
 def populate_inbox() -> None:
@@ -42,12 +56,12 @@ def list_emails(draw_unread:bool=False) -> None:
         print(create_title("unread"))
     else:
         print(create_title("inbox"))
-    print(f"{create_char_line()}\n{create_table_line()}\n{create_char_line()}")
+    print(f"{create_char_line()}\n{create_table_row()}\n{create_char_line()}")
     for index, email in enumerate(inbox):
         if draw_unread and email.has_been_read:
             pass
         else:
-            print(create_table_line(index, email.subject_line))
+            print(create_table_row(index, email.subject_line))
             print(create_char_line())
 
 
@@ -57,7 +71,7 @@ def validate_menu_choice(user_str: str) -> list:
     while True:
         if len(user_list) == 1:
             # Validation for single word inputs ('unread' and 'quit')
-            valid_inputs = ["unread", "quit"]
+            valid_inputs = ["unread", "help", "quit"]
             if user_list[0] in valid_inputs:
                 break
         elif user_list[1].isdigit():
@@ -90,14 +104,7 @@ def main() -> None:
     populate_inbox()
 
     list_emails()
-    print("""\nThe following commands are available:
-\t* read x - read an email in the inbox 
-\t* spam x - mark an email as spam
-\t* del x - delete an email
-\t* unread - view unread emails
-\t* quit - quit application
-where 'x' is the email number in the table above. 
-          """)
+    print(help_string)
     while True:
         # Get user input and prepare for command logic.
         menu_choice = input("Enter your input: ")
@@ -108,6 +115,7 @@ where 'x' is the email number in the table above.
 
         # Route with command variable and execute desired logic.
         if command == "read":
+            print(create_title(f"email {email}"))
             inbox[email].read_email()
         elif command == "spam":
             inbox[email].is_spam = True
@@ -118,6 +126,9 @@ where 'x' is the email number in the table above.
             list_emails()
         elif command == "unread":
             list_emails(True)
+            print("\n\thelp - list all available commands\n")
+        elif command == "help":
+            print(help_string)
         elif command == "quit":
             print(create_char_line())
             print(f"{'*'*33}{color.bold}email.py END{color.end}{'*'*34}")

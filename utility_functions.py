@@ -24,11 +24,24 @@ def create_table_cell(item:str, cell_width:int) -> str:
     else:
         return f"{' '*int(math.floor(spacing))}{item}{' '*int(math.ceil(spacing))}"
 
-def create_table_line(num:str="Number", subject: float="Subject") -> str:
+def create_table_row(num:str="Number", subject: float="Subject") -> str:
     """Creates each line in a table of menu items, prices, stock and stock value."""
-    num_cell = create_table_cell(num, 16)
-    subject_cell = create_table_cell(subject, 60)
-    return f"|{num_cell}|{subject_cell}|"
+    # TODO - needs to work back from cell width and find first space - will avoid splitting mid-word
+    formatted_str = subject[0:60]
+    table_row = f"|{create_table_cell(num, 16)}|{create_table_cell(formatted_str, 60)}|"
+    
+    # if 'subject' is wider than the cell width the code below will provide new lines
+    if len(subject) > 60:
+        formatted_str = subject[60:]
+        rem_subject_length = len(subject) - 60
+    
+        while rem_subject_length > 0:
+            table_row += f"\n|{create_table_cell("", 16)}|{create_table_cell(formatted_str, 60)}|"
+            rem_subject_length = len(formatted_str) - 60
+            if len(formatted_str) > 60:
+                formatted_str = formatted_str[60:]
+    
+    return table_row
 
 def create_title(title_str:str, line_width:int=79) -> str:
     """draws a box that includes a title string to help the user navigate through the app."""
