@@ -120,6 +120,7 @@ def main() -> None:
         if command == "read":
             print(create_title(f"email {email}"))
             inbox[email].read_email()
+            print("\n\thelp - list all available commands\n")
         elif command == "spam":
             inbox[email].is_spam = True
             print(f"\nemail {email} has been marked as spam")
