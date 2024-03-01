@@ -24,22 +24,32 @@ def create_table_cell(item:str, cell_width:int) -> str:
     else:
         return f"{' '*int(math.floor(spacing))}{item}{' '*int(math.ceil(spacing))}"
 
-def create_table_row(num:str="Number", subject: float="Subject") -> str:
+def create_table_row(cell_1_string:str="Number", cell_2_string: float="Subject") -> str:
     """Creates each line in a table of menu items, prices, stock and stock value."""
-    # TODO - needs to work back from cell width and find first space - will avoid splitting mid-word
-    formatted_str = subject[0:60]
-    table_row = f"|{create_table_cell(num, 16)}|{create_table_cell(formatted_str, 60)}|"
+    cell_2_width = 60
+    # Should only do the following if cell_2_string length is greater than cell_2_width
+    if len(cell_2_string) > cell_2_width:
+        table_row = create_multi_line_table_row(cell_1_string, cell_2_string, cell_2_width)
+    else:
+        table_row = f"|{create_table_cell(cell_1_string, 16)}|{create_table_cell(cell_2_string[0:cell_2_width], cell_2_width)}|"
+
+    return table_row
+
+
+def create_multi_line_table_row(cell_1_string:str, cell_2_string:str, cell_2_width:int) -> str:
+    """Creates table rows of height more than 1. Required when cell_2_string string is longer than cell_2_width."""
+    cell_2_list = cell_2_string[0:cell_2_width].split(" ")
+    current_line = " ".join(cell_2_list[0:-1])
+    remaining_str = cell_2_list[-1] + cell_2_string[cell_2_width:]
+    table_row = f"|{create_table_cell(cell_1_string, 16)}|{create_table_cell(current_line, cell_2_width)}|"
+
+    while len(remaining_str) > cell_2_width:
+        cell_2_list = remaining_str[0:cell_2_width].split(" ")
+        current_line = " ".join(cell_2_list[0:-1])
+        remaining_str = cell_2_list[-1] + remaining_str[cell_2_width:]
+        table_row += f"\n|{create_table_cell("", 16)}|{create_table_cell(current_line, cell_2_width)}|"
     
-    # if 'subject' is wider than the cell width the code below will provide new lines
-    if len(subject) > 60:
-        formatted_str = subject[60:]
-        rem_subject_length = len(subject) - 60
-    
-        while rem_subject_length > 0:
-            table_row += f"\n|{create_table_cell("", 16)}|{create_table_cell(formatted_str, 60)}|"
-            rem_subject_length = len(formatted_str) - 60
-            if len(formatted_str) > 60:
-                formatted_str = formatted_str[60:]
+    table_row += f"\n|{create_table_cell("", 16)}|{create_table_cell(remaining_str, cell_2_width)}|"
     
     return table_row
 

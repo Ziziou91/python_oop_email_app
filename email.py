@@ -45,7 +45,8 @@ def populate_inbox() -> None:
         ["hello@pythontips.com", "British or American english variable names?", "Hi there, one of the most common questions we get asked is best practice for variable spelling and grammar. Check out our website for our editors thoughts on the matter."],
         ["coffee@coderscoffee.yum", "5 roasts for the the coffee-powered coder in your life", "Our head roaster has complied a list of the best brews for programmers passionate about java (coffee)."],
         ["noreply@betterui.com", "Create UI for international audiences", "It's natural to use or experience and intuition to approach great UI, but how do we ensure designs make sense to international audiences. We discussed this concept the worlds leading UI experts."],
-        ["newsletter@web.com", "Trends in web development to watch in 2024", "Here's a list of some of the developments in web technologies we are most excited about."]
+        ["newsletter@web.com", "Trends in web development to watch in 2024", "Here's a list of some of the developments in web technologies we are most excited about."],
+        ["teststring@py.com", "The perfect test string for create_multi_line_table_row", "Hi there, here is a really long string. It's well suited to helping the developer of this app create create_multi_line_table_row, a function to create table rows matched to the length of the string they are given. This will mean that all text is displayed correctly and in a readable manner. So words aren't cut suddenly - the function will work backwards to the last space and start the next line there. Pretty neat right! I hope you like the functionality - please feel free to share feedback and any potential improvements."]
         ]
     inbox.extend([Email(*initial_email_data) for initial_email_data in initial_emails_data])
 
