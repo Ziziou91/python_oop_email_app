@@ -1,5 +1,5 @@
 import pytest
-from utility_functions import create_char_line, create_table_cell, create_title, create_table_line
+from utility_functions import create_char_line, create_table_cell, create_title, create_table_row
 
 # ============create_char_line tests============
 def test_create_char_line_returns_string():
@@ -44,15 +44,15 @@ def test_create_table_cell_returns_expected_value(item, cell_width, expected):
     assert create_table_cell(item, cell_width) == expected
 
 
-# ============create_table_line tests============
+# ============create_table_row tests============
 def test_create_line_returns_string():
-    """ensures that create_table_line returns a string"""
-    assert isinstance(create_table_line(), str)
+    """ensures that create_table_row returns a string"""
+    assert isinstance(create_table_row(), str)
 
-def test_create_table_line_returns_default_string():
-    """Ensures create_table_line returns the correct default string when no args."""
+def test_create_table_row_returns_default_string():
+    """Ensures create_table_row returns the correct default string when no args."""
     default = "|     Number     |                          Subject                           |"
-    assert create_table_line() == default
+    assert create_table_row() == default
 
 @pytest.mark.parametrize(
         ("num", "subject", "expected"),
@@ -62,9 +62,9 @@ def test_create_table_line_returns_default_string():
             ("test", "test", "|      test      |                            test                            |")
         )
 )
-def test_create_table_line_returns_expected_value(num, subject, expected):
+def test_create_table_row_returns_expected_value(num, subject, expected):
     """Ensures that create_table_cell returns expected value."""
-    assert create_table_line(num, subject) == expected
+    assert create_table_row(num, subject) == expected
 
 
 # ============create_title tests============
