@@ -66,4 +66,5 @@ def create_multi_line_table_row(cell_1_string:str, cell_2_string:str, cell_2_wid
 
     # Add final line to table_row.
     table_row += f"|{create_table_cell("", 16)}|{create_table_cell(remaining_str, cell_2_width)}|"
+    print(table_row)
     return table_row
