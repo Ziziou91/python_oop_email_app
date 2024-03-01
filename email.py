@@ -1,5 +1,5 @@
 import sys
-from utility_functions import color, create_char_line, create_table_row, create_title
+from utility_functions import Color, create_char_line, create_table_row, create_title
 
 class Email():
     """Class copies the basic functionality expected from an email."""
@@ -27,6 +27,8 @@ class Email():
 
         self.has_been_read = True
 
+
+# ==============Global Variables============== 
 inbox = []
 help_string = """\nThe following commands are available:
 \t* read x - read an email in the inbox 
@@ -98,7 +100,7 @@ def validate_menu_choice(user_str: str) -> list:
 def main() -> None:
     """populates inbox with sample emails and prints before asking for user input."""
     print(create_char_line())
-    print(f"{'*'*36}{color.bold}email.py{color.end}{'*'*35}")
+    print(f"{'*'*36}{Color.bold}email.py{Color.end}{'*'*35}")
     print(create_char_line())
 
     # Create 4 instances of Email class for user to interact with.
@@ -132,7 +134,7 @@ def main() -> None:
             print(help_string)
         elif command == "quit":
             print(create_char_line())
-            print(f"{'*'*33}{color.bold}email.py END{color.end}{'*'*34}")
+            print(f"{'*'*33}{Color.bold}email.py END{Color.end}{'*'*34}")
             print(create_char_line())
 
             sys.exit()
