@@ -2,7 +2,7 @@ import sys
 from utility_functions import Color, create_char_line, create_table_row, create_title
 
 class Email():
-    """Class copies the basic functionality expected from an email."""
+    """Class provides the basic functionality expected for an email."""
     def __init__(self, email_address: str, subject_line: str, email_content: str) -> None:
         self.email_address = email_address
         self.subject_line = subject_line
